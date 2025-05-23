@@ -12,7 +12,7 @@ Desafio técnico para atuar como desenvolvedor fullstack na donald.bet que simul
 
 ## ✅ Funcionalidades Implementadas
 
-- [ ] Login com JWT
+- [x] Login com JWT
 - [ ] Listagem de eventos para apostar
 - [ ] Registro de múltiplas apostas
 - [ ] Consulta do histórico de apostas com status
