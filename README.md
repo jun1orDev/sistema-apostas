@@ -1,12 +1,14 @@
-# 🏆 Sports Betting App
+# 🏆 App Sistema de Apostas
 
-Este é um desafio técnico fullstack que simula um módulo simplificado de apostas esportivas, com backend em Python e frontend em React.
+Desafio técnico para atuar como desenvolvedor fullstack na donald.bet que simula um módulo simplificado de apostas esportivas, com backend em Python e frontend em React.
 
 ## 🚀 Tecnologias Utilizadas
 
-- Backend: Python (FastAPI), MySQL
+- Backend: Python (FastAPI)
 - Frontend: React
 - Autenticação: JWT
+- Banco de Dados: MySQL
+- Docker: Para containerização
 
 ## ✅ Funcionalidades Implementadas
 
