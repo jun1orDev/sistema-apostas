@@ -36,5 +36,6 @@ class Bet(BaseModel):
     event: Event
     amount: float
     status: str
+    created_at: datetime
     class Config:
         from_attributes = True

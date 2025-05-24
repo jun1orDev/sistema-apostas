@@ -31,7 +31,7 @@ export default function MyBets() {
 						<p className="mb-4">Você ainda não fez nenhuma aposta.</p>
 						<Link
 							to="/events"
-							className="px-4 py-2 bg-blue-500 text-white rounded"
+							className="px-4 py-2 bg-[#07102A] text-white rounded"
 						>
 							Ver Eventos
 						</Link>
@@ -41,15 +41,12 @@ export default function MyBets() {
 						<ul className="space-y-2">
 							{bets.map(bet => (
 								<li key={bet.id} className="p-4 bg-white rounded shadow">
-									<div className="flex justify-between items-center">
-										<p>
-											<span className='block'>{bet.event.name}</span>
-
-											<span className='text-sm font-bold'>valor da aposta: R${bet.amount.toFixed(2)}</span>
-										</p>
-										<div className="flex items-center gap-2">
-											<span className={`${getStatusClass(bet.status)} text-white px-2 py-1 rounded capitalize`}> {bet.status} </span>
-										</div>
+									<div className="flex flex-col space-y-1">
+										<span className="text-xs text-gray-500">ID: {bet.id}</span>
+										<span className="text-xs text-gray-500">Data: {new Date(bet.created_at).toLocaleString()}</span>
+										<span className='block font-semibold'>{bet.event.name}</span>
+										<span className='text-sm font-bold'>Valor da aposta: R${bet.amount.toFixed(2)}</span>
+										<span className={`${getStatusClass(bet.status)} text-white px-2 py-1 rounded capitalize inline-block`}> {bet.status} </span>
 									</div>
 								</li>
 							))}

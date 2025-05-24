@@ -25,6 +25,7 @@ class Bet(Base):
     id = Column(Integer, primary_key=True, index=True)
     amount = Column(Float, nullable=False)
     status = Column(String(20), default="pending")
+    created_at = Column(DateTime, default=datetime.datetime.utcnow, nullable=False)
     event_id = Column(Integer, ForeignKey("events.id"))
     user_id = Column(Integer, ForeignKey("users.id"))
 
