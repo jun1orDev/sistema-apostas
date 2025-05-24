@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from .. import schemas, models, database, auth
+from fastapi import Depends
 import random
 
 router = APIRouter(prefix="/users", tags=["users"])
@@ -17,4 +18,8 @@ def create_user(user_in: schemas.UserCreate, db: Session = Depends(database.get_
     db.add(user)
     db.commit()
     db.refresh(user)
+    return user
+
+@router.get("/me", response_model=schemas.UserRead)
+def read_current_user(user: models.User = Depends(auth.get_current_user)):
     return user
