@@ -12,6 +12,14 @@ def create_bets(
     db: Session = Depends(database.get_db),
     user = Depends(auth.get_current_user)
 ):
+    # calcula total das apostas e verifica saldo
+    total_amount = sum(b.amount for b in bets_in)
+    if user.balance < total_amount:
+        raise HTTPException(status_code=400, detail="Saldo insuficiente para realizar apostas")
+    # debita do saldo e atualiza usuário
+    user.balance -= total_amount
+    db.add(user)
+    db.flush()
     created = []
     for bet_in in bets_in:
         event = db.query(models.Event).get(bet_in.event_id)
