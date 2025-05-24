@@ -33,7 +33,7 @@ export default function MyBets() {
 	const getStatusClass = (status) => {
 		if (status === 'vencida') return 'bg-green-500'
 		if (status === 'perdida') return 'bg-red-500'
-		if (status === 'pendente') return 'bg-yellow-500'
+		if (status === 'pendente') return 'bg-gray-500'
 		return 'bg-gray-500'
 	}
 
