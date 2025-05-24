@@ -8,7 +8,8 @@ export default function Events() {
 	// estados para apostas em tempo real
 	const [betInputs, setBetInputs] = useState({})
 	const [betOptions, setBetOptions] = useState({})
-	const [betsCart, setBetsCart] = useState([])         // apostas selecionadas
+	const [betsCart, setBetsCart] = useState([])
+	const [showCart, setShowCart] = useState(true)
 	const { refreshBalance, user } = useContext(AuthContext)
 	// total de apostas no carrinho
 	const totalCart = betsCart.reduce((sum, b) => sum + b.amount, 0)
@@ -73,6 +74,7 @@ export default function Events() {
 											const opt = betOptions[evt.id];
 											if (amt > 0 && opt) {
 												setBetsCart([...betsCart, { event: evt, amount: amt, selected_option: opt }]);
+												setShowCart(true);
 												setBetInputs({ ...betInputs, [evt.id]: '' });
 												setBetOptions({ ...betOptions, [evt.id]: '' });
 											}
@@ -111,9 +113,22 @@ export default function Events() {
 				</ul>
 
 				{/* Carrinho de apostas */}
-				{betsCart.length > 0 && (
-					<div className="fixed bottom-0 left-0 right-0 bg-white p-4 shadow-lg">
-						<h3 className="font-semibold mb-2">Apostas Selecionadas:</h3>
+				{betsCart.length > 0 && showCart && (
+					<div className="fixed bottom-0 left-0 right-0 bg-white p-4 shadow-lg border-t border-gray-300 box-shadow ">
+						<div className="flex justify-between items-center mb-2">
+							<h3 className="font-semibold">Apostas Selecionadas:</h3>
+
+							<button onClick={() => setShowCart(false)} className="text-green-500 hover:text-green-700 font-bold cursor-pointer">
+								<div className='flex items-center gap-2 font-bold'>
+
+									<svg xmlns="http://www.w3.org/2000/svg" className='font-bold' width="1em" height="1em" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="20" stroke-dashoffset="20" d="M3 3l18 0"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.2s" values="20;0"></animate></path><path stroke-dasharray="16" stroke-dashoffset="16" d="M12 21l0 -13.5"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.3s" dur="0.2s" values="16;0"></animate></path><path stroke-dasharray="8" stroke-dashoffset="8" d="M12 7l4 4M12 7l-4 4"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.5s" dur="0.2s" values="8;0"></animate></path></g></svg>
+									<p>
+
+										Apostar mais
+									</p>
+								</div>
+							</button>
+						</div>
 						<ul className="space-y-1 max-h-40 overflow-auto mb-2">
 							{betsCart.map((b, i) => (
 								<li key={i} className="flex justify-between items-center">
