@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
 
@@ -12,17 +12,13 @@ export default function App() {
 		<BrowserRouter>
 			<AuthProvider>
 				<Routes>
+					{/* Rotas públicas */}
+					<Route path="/" element={<Events />} />
+					<Route path="/events" element={<Events />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/register" element={<Register />} />
 
-					<Route
-						path="/events"
-						element={
-							<ProtectedRoute>
-								<Events />
-							</ProtectedRoute>
-						}
-					/>
+					{/* Rotas protegidas */}
 					<Route
 						path="/my-bets"
 						element={
@@ -32,8 +28,8 @@ export default function App() {
 						}
 					/>
 
-					{/* redireciona qualquer outro para /login */}
-					<Route path="*" element={<Login />} />
+					{/* Redireciona qualquer outra rota para eventos */}
+					<Route path="*" element={<Navigate to="/" replace />} />
 				</Routes>
 			</AuthProvider>
 		</BrowserRouter>
