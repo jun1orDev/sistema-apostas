@@ -30,12 +30,15 @@ class Event(BaseModel):
 class BetCreate(BaseModel):
     event_id: int
     amount: float
+    selected_option: str
 
 class Bet(BaseModel):
     id: int
     event: Event
     amount: float
     status: str
+    selected_option: str
+    profit: float
     created_at: datetime
     class Config:
         from_attributes = True

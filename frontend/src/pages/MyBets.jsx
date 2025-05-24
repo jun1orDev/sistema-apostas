@@ -89,9 +89,9 @@ export default function MyBets() {
 													<span className='block font-semibold'>{bet.event.name}</span>
 													<span className='text-sm font-bold'>Valor da aposta: R${bet.amount.toFixed(2)}</span>
 												</div>
-												<div>
-
+												<div className="flex flex-col items-end space-y-1">
 													<span className={`${getStatusClass(bet.status)} text-white px-2 py-1 rounded capitalize inline-block`}> {bet.status} </span>
+													<span className="text-sm text-gray-700">Lucro: R${bet.profit.toFixed(2)}</span>
 												</div>
 											</div>
 										</li>

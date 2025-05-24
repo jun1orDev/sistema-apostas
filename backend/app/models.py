@@ -28,6 +28,8 @@ class Bet(Base):
     created_at = Column(DateTime, default=datetime.datetime.utcnow, nullable=False)
     event_id = Column(Integer, ForeignKey("events.id"))
     user_id = Column(Integer, ForeignKey("users.id"))
+    selected_option = Column(String(20), nullable=False)
+    profit = Column(Float, default=0.0, nullable=False)
 
     event = relationship("Event")
     user = relationship("User", back_populates="bets")

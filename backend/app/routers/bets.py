@@ -26,7 +26,17 @@ def create_bets(
         if not event:
             raise HTTPException(status_code=404, detail=f"Evento {bet_in.event_id} não encontrado")
         status = choice(["vencida", "pendente", "perdida"])
-        bet = models.Bet(amount=bet_in.amount, event_id=event.id, user_id=user.id, status=status)
+        # calcula lucro se venceu
+        odd_value = getattr(event, f"odd_{bet_in.selected_option}")
+        profit = bet_in.amount * odd_value - bet_in.amount if status == "vencida" else 0.0
+        bet = models.Bet(
+            amount=bet_in.amount,
+            event_id=event.id,
+            user_id=user.id,
+            status=status,
+            selected_option=bet_in.selected_option,
+            profit=profit
+        )
         db.add(bet)
         db.flush()
         db.refresh(bet)
