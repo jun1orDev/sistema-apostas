@@ -52,7 +52,7 @@ export default function Login() {
 					</label>
 					<button
 						type="submit"
-						className="w-full bg-[#07102A] text-white py-2 rounded"
+						className="w-full bg-[#213D78] text-white py-2 rounded cursor-pointer"
 					>
 						Entrar
 					</button>
@@ -60,7 +60,7 @@ export default function Login() {
 				<div className="mt-4 text-center">
 					<Link
 						to="/register"
-						className="text-[#07102A] hover:underline"
+						className="text-[#213D78] hover:underline"
 					>
 						Não tem conta? Cadastre-se
 					</Link>

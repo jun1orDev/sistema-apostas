@@ -6,10 +6,12 @@ import { AuthContext } from '../contexts/AuthContext'
 export default function Events() {
 	const [events, setEvents] = useState([])
 	// estados para apostas em tempo real
-	const [betInputs, setBetInputs] = useState({})       // amounts per event
-	const [betOptions, setBetOptions] = useState({})     // option per event (home, draw, away)
+	const [betInputs, setBetInputs] = useState({})
+	const [betOptions, setBetOptions] = useState({})
 	const [betsCart, setBetsCart] = useState([])         // apostas selecionadas
 	const { refreshBalance, user } = useContext(AuthContext)
+	// total de apostas no carrinho
+	const totalCart = betsCart.reduce((sum, b) => sum + b.amount, 0)
 
 	useEffect(() => {
 		api.get('/events').then(res => setEvents(res.data))
@@ -71,7 +73,7 @@ export default function Events() {
 												setBetOptions({ ...betOptions, [evt.id]: '' });
 											}
 										}}
-										className="block px-4 py-2 bg-[#07102A] text-white rounded"
+										className="block px-4 py-2 bg-[#213D78] text-white rounded"
 									>
 										Adicionar
 									</button>
@@ -117,33 +119,45 @@ export default function Events() {
 											Odd ({b.selected_option}): {b.event[`odd_${b.selected_option}`]}
 										</span>
 									</div>
-									<span>R${b.amount.toFixed(2)}</span>
+									<div className="flex items-center gap-2">
+										<span>R${b.amount.toFixed(2)}</span>
+										<div>
+											<svg xmlns="http://www.w3.org/2000/svg"
+												onClick={() => {
+													setBetsCart(betsCart.filter((_, index) => index !== i))
+												}} width="22" height="22" className='text-red-500 cursor-pointer' viewBox="0 0 24 24"><path fill="currentColor" d="M5 21V6H4V4h5V3h6v1h5v2h-1v15zm2-2h10V6H7zm2-2h2V8H9zm4 0h2V8h-2zM7 6v13z" /></svg>
+										</div>
+									</div>
 								</li>
 							))}
 						</ul>
 						<div className="flex justify-between items-center">
 							{user?.balance != null && (
-								<span className="text-lg font-semibold">
-									Saldo atual: R${user.balance.toFixed(2)}
+								<span className={`text-lg font-semibold ${totalCart > user.balance ? 'text-red-500' : 'text-green-600'}`}>
+									Saldo atual: R${user.balance.toFixed(2)} <br /><small>{totalCart > user.balance ? 'saldo insuficiente' : ''}</small>
 								</span>
 							)}
-							<button
-								onClick={async () => {
-									try {
-										// envia todas as apostas de uma vez como array
-										await api.post('/bets', betsCart.map(b => ({ event_id: b.event.id, amount: b.amount })))
-										alert('Todas as apostas realizadas com sucesso!')
-										setBetsCart([])
-										refreshBalance()
-									} catch (err) {
-										let detail = err?.response?.data?.detail
-										alert(detail || 'Erro ao enviar apostas')
-									}
-								}}
-								className="px-4 py-2 bg-green-600 text-white rounded"
-							>
-								Enviar Apostas
-							</button>
+							<div>
+								<p className="text-sm text-gray-600 mb-2 text-end">Total: R$
+									{totalCart}</p>
+								<button
+									onClick={async () => {
+										try {
+											// envia todas as apostas de uma vez como array
+											await api.post('/bets', betsCart.map(b => ({ event_id: b.event.id, amount: b.amount })))
+											alert('Todas as apostas realizadas com sucesso!')
+											setBetsCart([])
+											refreshBalance()
+										} catch (err) {
+											let detail = err?.response?.data?.detail
+											alert(detail || 'Erro ao enviar apostas')
+										}
+									}}
+									className="px-4 py-2 bg-green-600 text-white rounded"
+								>
+									Enviar Apostas
+								</button>
+							</div>
 						</div>
 					</div>
 				)}

@@ -72,12 +72,12 @@ export default function Register() {
 							required
 						/>
 					</label>
-					<button type="submit" className="w-full bg-[#07102A] text-white py-2 rounded">
+					<button type="submit" className="w-full bg-[#213D78] text-white py-2 rounded cursor-pointer">
 						Registrar
 					</button>
 				</form>
 				<div className="mt-4 text-center">
-					<Link to="/login" className="text-[#07102A] hover:underline">Já tem conta? Entrar</Link>
+					<Link to="/login" className="text-[#213D78] hover:underline">Já tem conta? Entrar</Link>
 				</div>
 			</div>
 		</div>
