@@ -24,7 +24,7 @@ export default function Events() {
 	return (
 		<>
 			<Header />
-			<div className="container mx-auto px-4 py-6">
+			<div className={`container mx-auto px-4 pt-6 pb-40`}>
 				<div className="flex justify-between items-center mb-4">
 					<h1 className="text-2xl"><span className='font-bold'>Próximos Eventos</span> <br /> <span className='font-light text-lg'>{user ? 'Seja bem-vindo, Bora apostar?' : 'Hoje é seu dia de sorte!'}</span></h1>
 				</div>

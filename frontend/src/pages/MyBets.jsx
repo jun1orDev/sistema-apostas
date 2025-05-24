@@ -28,6 +28,8 @@ export default function MyBets() {
 		return statusOK && dateOK
 	})
 	const totalFilteredAmount = filteredBets.reduce((sum, b) => sum + b.amount, 0)
+	// total de lucro filtrado
+	const totalFilteredProfit = filteredBets.reduce((sum, b) => sum + (b.profit || 0), 0)
 	const getStatusClass = (status) => {
 		if (status === 'vencida') return 'bg-green-500'
 		if (status === 'perdida') return 'bg-red-500'
@@ -38,7 +40,7 @@ export default function MyBets() {
 	return (
 		<>
 			<Header />
-			<div className="container mx-auto px-4 py-6">
+			<div className="container mx-auto px-4 py-6 pb-40">
 				<div className="flex justify-between items-center mb-4">
 					<h1 className="text-2xl">Minhas Apostas</h1>
 				</div>
@@ -98,11 +100,12 @@ export default function MyBets() {
 									))}
 								</ul>
 								<div className="flex justify-between mt-4">
-									<span className="font-semibold">
+									<span className="font-semibold text-red-400">
 										Total gasto: R${totalFilteredAmount.toFixed(2)}
 									</span>
+									<span className="font-semibold text-green-500">Total de Lucro: R${totalFilteredProfit.toFixed(2)}</span>
 
-									<span className="font-semibold">Total de Apostas: {bets.length}</span>
+									<span className="font-semibold text-[#213D78]">Total de Apostas: {bets.length}</span>
 								</div>
 							</>
 						)}
