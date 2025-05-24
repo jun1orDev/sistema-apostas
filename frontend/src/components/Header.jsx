@@ -28,22 +28,24 @@ export default function Header() {
 						</button>
 					</div>
 					<ul className={`flex-col md:flex md:flex-row md:space-x-4 ${isOpen ? 'flex' : 'hidden'} absolute bg-white right-4 mt-2 py-2 w-40 md:static md:mt-0 md:py-0 md:w-auto shadow md:shadow-none`}>
-						<li className="flex items-center p-2">
-							{user?.balance != null && (
+						{user && (
+							<li className="flex items-center p-2">
 								<span className="ml-2 text-green-600 font-semibold">
 									Saldo: R${user.balance.toFixed(2)}
 								</span>
-							)}
-						</li>
+							</li>
+						)}
 						<li>
 							<Link to="/events" className="block px-4 py-2 hover:bg-gray-100">Eventos</Link>
 						</li>
 						<li>
 							<Link to="/my-bets" className="block px-4 py-2 hover:bg-gray-100">Minhas Apostas</Link>
 						</li>
-						<li>
-							<button onClick={handleLogout} className="w-full text-left px-4 py-2 hover:bg-gray-100">Sair</button>
-						</li>
+						{user && (
+							<li>
+								<button onClick={handleLogout} className="w-full text-left px-4 py-2 hover:bg-gray-100">Sair</button>
+							</li>
+						)}
 					</ul>
 				</nav>
 			</div>
