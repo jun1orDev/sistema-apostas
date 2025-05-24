@@ -10,6 +10,7 @@ export default function Events() {
 	const [betOptions, setBetOptions] = useState({})
 	const [betsCart, setBetsCart] = useState([])
 	const [showCart, setShowCart] = useState(true)
+	const [loading, setLoading] = useState(false)
 	const { refreshBalance, user } = useContext(AuthContext)
 	// total de apostas no carrinho
 	const totalCart = betsCart.reduce((sum, b) => sum + b.amount, 0)
@@ -90,6 +91,7 @@ export default function Events() {
 											const amt = parseFloat(betInputs[evt.id])
 											const opt = betOptions[evt.id]
 											if (amt > 0 && opt) {
+												setLoading(true)
 												try {
 													await api.post('/bets', [{ event_id: evt.id, amount: amt, selected_option: opt }])
 													alert('Aposta única realizada com sucesso!')
@@ -99,12 +101,15 @@ export default function Events() {
 												} catch (err) {
 													let detail = err?.response?.data?.detail
 													alert(detail || 'Erro ao enviar aposta')
+												} finally {
+													setLoading(false)
 												}
 											}
 										}}
-										className="px-4 py-2 bg-green-500 text-white rounded"
+										disabled={loading}
+										className={loading ? 'px-4 py-2 bg-gray-400 text-white rounded cursor-not-allowed' : 'px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded'}
 									>
-										Apostar Agora
+										{loading ? 'Apostando...' : 'Apostar Agora'}
 									</button>
 								</div>
 							</div>
@@ -161,20 +166,24 @@ export default function Events() {
 									{totalCart}</p>
 								<button
 									onClick={async () => {
+										setLoading(true)
 										try {
 											// envia todas as apostas de uma vez como array
-											await api.post('/bets', betsCart.map(b => ({ event_id: b.event.id, amount: b.amount })))
+											await api.post('/bets', betsCart.map(b => ({ event_id: b.event.id, amount: b.amount, selected_option: b.selected_option })))
 											alert('Todas as apostas realizadas com sucesso!')
 											setBetsCart([])
 											refreshBalance()
 										} catch (err) {
 											let detail = err?.response?.data?.detail
 											alert(detail || 'Erro ao enviar apostas')
+										} finally {
+											setLoading(false)
 										}
 									}}
-									className="px-4 py-2 bg-green-600 text-white rounded"
+									disabled={loading}
+									className={loading ? 'px-4 py-2 bg-gray-400 text-white rounded cursor-not-allowed' : 'px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded'}
 								>
-									Enviar Apostas
+									{loading ? 'Enviando...' : 'Enviar Apostas'}
 								</button>
 							</div>
 						</div>

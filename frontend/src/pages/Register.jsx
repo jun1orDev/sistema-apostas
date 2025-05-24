@@ -10,6 +10,7 @@ export default function Register() {
 	const [confirmPassword, setConfirmPassword] = useState('')
 	const [error, setError] = useState(null)
 	const { login } = useContext(AuthContext)
+	const [loading, setLoading] = useState(false)
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
@@ -18,6 +19,7 @@ export default function Register() {
 			setError('As senhas não coincidem')
 			return
 		}
+		setLoading(true)
 		try {
 			await api.post('/users', { email, password })
 			// login automático após cadastro
@@ -30,6 +32,8 @@ export default function Register() {
 				detail = JSON.stringify(detail)
 			}
 			setError(detail || 'Erro ao registrar')
+		} finally {
+			setLoading(false)
 		}
 	}
 
@@ -72,8 +76,12 @@ export default function Register() {
 							required
 						/>
 					</label>
-					<button type="submit" className="w-full bg-[#213D78] text-white py-2 rounded cursor-pointer">
-						Registrar
+					<button
+						type="submit"
+						disabled={loading}
+						className={`w-full py-2 rounded text-white ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#213D78] hover:bg-[#1b3460]'}`}
+					>
+						{loading ? 'Registrando...' : 'Registrar'}
 					</button>
 				</form>
 				<div className="mt-4 text-center">

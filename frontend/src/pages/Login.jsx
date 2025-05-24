@@ -9,15 +9,19 @@ export default function Login() {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [error, setError] = useState(null)
+	const [loading, setLoading] = useState(false)
 
 	if (user) return <Navigate to="/events" replace />
 
 	const handleSubmit = async e => {
 		e.preventDefault()
+		setLoading(true)
 		try {
 			await login(email, password)
 		} catch (err) {
 			setError(err.response?.data?.detail || 'Erro ao fazer login')
+		} finally {
+			setLoading(false)
 		}
 	}
 
@@ -52,9 +56,10 @@ export default function Login() {
 					</label>
 					<button
 						type="submit"
-						className="w-full bg-[#213D78] text-white py-2 rounded cursor-pointer"
+						disabled={loading}
+						className={`w-full py-2 rounded text-white ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#213D78] hover:bg-[#1b3460]'}`}
 					>
-						Entrar
+						{loading ? 'Entrando...' : 'Entrar'}
 					</button>
 				</form>
 				<div className="mt-4 text-center">
