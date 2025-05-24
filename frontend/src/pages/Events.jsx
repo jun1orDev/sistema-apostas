@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import api from '../services/api'
 import Header from '../components/Header'
 import { AuthContext } from '../contexts/AuthContext'
@@ -12,6 +13,7 @@ export default function Events() {
 	const [showCart, setShowCart] = useState(true)
 	const [loading, setLoading] = useState(false)
 	const { refreshBalance, user } = useContext(AuthContext)
+	const navigate = useNavigate()
 	// total de apostas no carrinho
 	const totalCart = betsCart.reduce((sum, b) => sum + b.amount, 0)
 
@@ -155,7 +157,7 @@ export default function Events() {
 								</li>
 							))}
 						</ul>
-						<div className="flex justify-between items-center">
+						<div className={`flex items-center ${user ? 'justify-between' : 'justify-end'}`}>
 							{user?.balance != null && (
 								<span className={`text-lg font-semibold ${totalCart > user.balance ? 'text-red-500' : 'text-green-600'}`}>
 									Saldo atual: R${user.balance.toFixed(2)} <br /><small>{totalCart > user.balance ? 'saldo insuficiente' : ''}</small>
@@ -166,6 +168,11 @@ export default function Events() {
 									{totalCart}</p>
 								<button
 									onClick={async () => {
+										// redireciona para login se não estiver autenticado
+										if (!user) {
+											navigate('/login')
+											return
+										}
 										setLoading(true)
 										try {
 											// envia todas as apostas de uma vez como array
