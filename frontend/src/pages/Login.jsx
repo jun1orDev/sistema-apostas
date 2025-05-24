@@ -2,6 +2,7 @@ import { useContext, useState } from 'react'
 import { AuthContext } from '../contexts/AuthContext'
 import { Navigate } from 'react-router-dom'
 import logo from '../assets/logo.png'
+import { Link } from 'react-router-dom'
 
 export default function Login() {
 	const { user, login } = useContext(AuthContext)
@@ -57,12 +58,12 @@ export default function Login() {
 					</button>
 				</form>
 				<div className="mt-4 text-center">
-					<a
-						href="/register"
+					<Link
+						to="/register"
 						className="text-blue-500 hover:underline"
 					>
 						Não tem conta? Cadastre-se
-					</a>
+					</Link>
 				</div>
 			</div>
 		</div>

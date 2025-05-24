@@ -2,6 +2,7 @@ import { useState, useContext } from 'react'
 import { AuthContext } from '../contexts/AuthContext'
 import api from '../services/api'
 import logo from '../assets/logo.png'
+import { Link } from 'react-router-dom'
 
 export default function Register() {
 	const [email, setEmail] = useState('')
@@ -22,7 +23,13 @@ export default function Register() {
 			// login automático após cadastro
 			await login(email, password)
 		} catch (err) {
-			setError(err?.response?.data?.detail || 'Erro ao registrar')
+			let detail = err?.response?.data?.detail
+			if (Array.isArray(detail)) {
+				detail = detail.map(e => e.msg).join(', ')
+			} else if (typeof detail === 'object') {
+				detail = JSON.stringify(detail)
+			}
+			setError(detail || 'Erro ao registrar')
 		}
 	}
 
@@ -70,7 +77,7 @@ export default function Register() {
 					</button>
 				</form>
 				<div className="mt-4 text-center">
-					<a href="/login" className="text-blue-500 hover:underline">Já tem conta? Entrar</a>
+					<Link to="/login" className="text-blue-500 hover:underline">Já tem conta? Entrar</Link>
 				</div>
 			</div>
 		</div>
