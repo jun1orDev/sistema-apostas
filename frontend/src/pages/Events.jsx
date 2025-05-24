@@ -29,7 +29,11 @@ export default function Events() {
 					{events.map(evt => (
 						<li key={evt.id} className="p-4 bg-white rounded shadow grid grid-cols-1 lg:grid-cols-5 justify-center items-center gap-4">
 							<div className='flex md:block flex-col justify-center items-center col-span-1 lg:col-span-2'>
-								<span className="font-semibold">{evt.name}</span>
+								<div className='flex flex-col '>
+
+									<span className="text-sm text-gray-500">Dia do Jogo: {new Date(evt.date_initial).toLocaleString()}</span>
+									<span className="font-semibold">{evt.name}</span>
+								</div>
 								<div className="text-sm text-gray-600">
 									<div className="text-center md:text-start font-bold">Odds:</div>
 									<div className='flex flex-row gap-1'>

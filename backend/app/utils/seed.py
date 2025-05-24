@@ -35,9 +35,15 @@ def seed_events():
 			odd_home = round(random.uniform(1.5, 3.0), 2)
 			odd_draw = round(random.uniform(2.0, 4.0), 2)
 			odd_away = round(random.uniform(1.5, 3.0), 2)
+			# data e hora futura random (1 a 7 dias, 0 a 23 horas, 0 a 59 minutos)
+			future_date = datetime.datetime.utcnow() + datetime.timedelta(
+				days=random.randint(1, 7),
+				hours=random.randint(0, 23),
+				minutes=random.randint(0, 59)
+			)
 			db.add(Event(
 				name=name,
-				date_initial=datetime.datetime.utcnow(),
+				date_initial=future_date,
 				odd_home=odd_home,
 				odd_draw=odd_draw,
 				odd_away=odd_away
