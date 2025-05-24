@@ -10,11 +10,36 @@ Desafio técnico para atuar como desenvolvedor fullstack na donald.bet que simul
 - Banco de Dados: MySQL
 - Docker: Para containerização
 
-## ✅ Funcionalidades Implementadas
+## ✅ Funcionalidades principais Implementadas
 
 - [x] Login com JWT
-- [ ] Listagem de eventos para apostar
-- [ ] Registro de múltiplas apostas
-- [ ] Consulta do histórico de apostas com status
-- [ ] Frontend com login, dashboard e histórico
-- [ ] Backend com autenticação, endpoints para eventos e apostas
+- [x] Listagem de eventos para apostar
+- [x] Registro de múltiplas apostas
+- [x] Consulta do histórico de apostas com status
+- [x] Frontend com login, dashboard e histórico
+- [x] Backend com autenticação, endpoints para eventos e apostas
+
+## 🧑‍💻 Como Executar
+
+**Pré-requisitos**:
+- Docker
+- Docker Compose
+
+**1. Variáveis de ambiente**
+Crie um arquivo `.env` na raiz com as seguintes chaves:
+```
+MYSQL_ROOT_PASSWORD=SUASENHA
+MYSQL_DATABASE=seu_banco
+MYSQL_USER=usuario
+MYSQL_PASSWORD=senha
+VITE_API_URL=http://localhost:8000
+```
+
+**2. Iniciar containers**
+```bash
+docker-compose up --build
+```
+
+**3. Acessar aplicação**
+- Frontend: http://localhost:5173
+- Swagger API: http://localhost:8000/docs
