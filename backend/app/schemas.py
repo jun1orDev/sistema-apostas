@@ -1,5 +1,6 @@
 from pydantic import BaseModel, EmailStr
 from typing import List
+from datetime import datetime
 
 class UserRead(BaseModel):
 		id: int
@@ -18,7 +19,10 @@ class Token(BaseModel):
 class Event(BaseModel):
     id: int
     name: str
-    odds: float
+    date_initial: datetime
+    odd_home: float
+    odd_draw: float
+    odd_away: float
     class Config:
         from_attributes = True
 

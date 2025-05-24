@@ -1,6 +1,7 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Float
+from sqlalchemy import Column, Integer, String, ForeignKey, Float, DateTime, Enum
 from sqlalchemy.orm import relationship
 from .database import Base
+import datetime
 
 class User(Base):
     __tablename__ = "users"
@@ -13,7 +14,10 @@ class Event(Base):
     __tablename__ = "events"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(128), nullable=False)
-    odds = Column(Float, nullable=False)
+    date_initial = Column(DateTime, default=datetime.datetime.utcnow, nullable=False)
+    odd_home = Column(Float, nullable=False)
+    odd_draw = Column(Float, nullable=False)
+    odd_away = Column(Float, nullable=False)
 
 class Bet(Base):
     __tablename__ = "bets"
