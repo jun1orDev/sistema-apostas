@@ -9,6 +9,7 @@ class User(Base):
     email = Column(String(128), unique=True, index=True, nullable=False)
     hashed_password = Column(String(256), nullable=False)
     bets = relationship("Bet", back_populates="user")
+    balance = Column(Float, default=0.0)
 
 class Event(Base):
     __tablename__ = "events"

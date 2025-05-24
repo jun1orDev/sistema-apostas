@@ -5,6 +5,7 @@ from datetime import datetime
 class UserRead(BaseModel):
 		id: int
 		email: EmailStr
+		balance: float
 		class Config:
 				from_attributes = True
 
