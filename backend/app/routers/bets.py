@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from random import choice
 from .. import database, models, schemas, auth
 
 router = APIRouter(prefix="/bets", tags=["bets"])
@@ -13,7 +14,11 @@ def create_bet(
     event = db.query(models.Event).get(bet_in.event_id)
     if not event:
         raise HTTPException(status_code=404, detail="Evento não encontrado")
-    bet = models.Bet(amount=bet_in.amount, event_id=event.id, user_id=user.id)
+
+    # Simulação do status da aposta
+    status = choice(["vencida", "pendente", "perdida"])
+
+    bet = models.Bet(amount=bet_in.amount, event_id=event.id, user_id=user.id, status=status)
     db.add(bet)
     db.commit()
     db.refresh(bet)
