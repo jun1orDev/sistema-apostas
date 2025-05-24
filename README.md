@@ -29,7 +29,7 @@ Desafio técnico para atuar como desenvolvedor fullstack na donald.bet que simul
 Crie um arquivo `.env` na raiz com as seguintes chaves:
 ```
 MYSQL_ROOT_PASSWORD=SUASENHA
-MYSQL_DATABASE=seu_banco
+MYSQL_DATABASE=betting_app <-- Precisa ser exatamente esse nome>
 MYSQL_USER=usuario
 MYSQL_PASSWORD=senha
 VITE_API_URL=http://localhost:8000
