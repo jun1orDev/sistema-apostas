@@ -28,6 +28,19 @@ export default function Events() {
 				<div className="flex justify-between items-center mb-4">
 					<h1 className="text-2xl"><span className='font-bold'>Próximos Eventos</span> <br /> <span className='font-light text-lg'>{user ? 'Seja bem-vindo, Bora apostar?' : 'Hoje é seu dia de sorte!'}</span></h1>
 				</div>
+				<div className='flex justify-end items-center'>
+
+					{betsCart.length > 0 && (
+						<div
+							className="cursor-pointer text-[#213D78] hover:text-[#1b3460] font-bold mb-4"
+							onClick={() => setShowCart(!showCart)}
+						>
+							{showCart
+								? `Ocultar Apostas Pendentes (${betsCart.length})`
+								: `Mostrar Apostas Pendentes (${betsCart.length})`}
+						</div>
+					)}
+				</div>
 				{/* Lista de eventos com inputs de aposta */}
 				<ul className="space-y-4">
 					{events.map(evt => (
