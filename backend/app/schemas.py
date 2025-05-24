@@ -25,7 +25,6 @@ class Event(BaseModel):
 class BetCreate(BaseModel):
     event_id: int
     amount: float
-    status: str
 
 class Bet(BaseModel):
     id: int
