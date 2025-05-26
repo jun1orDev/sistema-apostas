@@ -105,6 +105,13 @@ export default function Events() {
 										onClick={async () => {
 											const amt = parseFloat(betInputs[evt.id])
 											const opt = betOptions[evt.id]
+
+											// redireciona para login se não estiver autenticado
+											if (!user) {
+												navigate('/login')
+												return
+											}
+
 											if (amt > 0 && opt) {
 												setLoading(true)
 												try {
